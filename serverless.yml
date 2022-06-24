@@ -1,0 +1,44 @@
+service: aws-node-http-api-project
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "dynamodb:Query"
+            - "dynamodb:Scan"
+            - "dynamodb:GetItem"
+            - "dynamodb:PutItem"
+            - "dynamodb:UpdateItem"
+            - "dynamodb:DeleteItem"
+          Resource:
+            - "arn:aws:dynamodb:us-east-1:299814122958:table/car-list-concessionary"
+            - "arn:aws:dynamodb:us-east-1:299814122958:table/reserved-cars"
+            - "arn:aws:dynamodb:us-east-1:299814122958:table/quotation-car"
+
+functions:
+  reserve-car-http:
+    handler: handler.reserveHandler
+    events:
+      - httpApi:
+          path: /reserve
+          method: post
+          cors: true
+  validate-car-http:
+    handler: handler.validateHandler
+    events:
+      - httpApi:
+          path: /validate
+          method: get
+          cors: true
+  quotation-car-http:
+    handler: handler.quotationHandler
+    events:
+      - httpApi:
+          path: /quotation
+          method: get
+          cors: true
