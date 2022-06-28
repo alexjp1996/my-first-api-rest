@@ -23,22 +23,7 @@ provider:
 functions:
   reserve-car-http:
     handler: handler.reserveHandler
-    events:
-      - httpApi:
-          path: /reserve
-          method: post
-          cors: true
   validate-car-http:
     handler: handler.validateHandler
-    events:
-      - httpApi:
-          path: /validate
-          method: get
-          cors: true
   quotation-car-http:
     handler: handler.quotationHandler
-    events:
-      - httpApi:
-          path: /quotation
-          method: get
-          cors: true
